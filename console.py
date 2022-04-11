@@ -37,6 +37,12 @@ class HBNBCommand(cmd.Cmd):
             ],
         "Float": ["latitude", "longitude"],
     }
+    dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
+    types = {
+             'number_rooms': int, 'number_bathrooms': int,
+             'max_guest': int, 'price_by_night': int,
+             'latitude': float, 'longitude': float
+            }
 
     def do_EOF(self, arg):
         """EOF command to exit with and of file
@@ -48,15 +54,46 @@ class HBNBCommand(cmd.Cmd):
         """
         return True
 
+    def _create_dict_instance(self, line):
+        """
+            Parse input and convert it to
+            Dict for do_create
+        """
+        new_dict = {}
+        for item in line:
+            if "=" in item:
+                # creating list from value and key
+                # if "=" found
+                new_arg = item.split("=", 1)
+                key = new_arg[0]
+                value = new_arg[1]
+                if value[0] == '"' == value[-1]:
+                    value = value.replace('"', "").replace("_", " ")
+                else:
+                    try:
+                        value = int(value)
+                    except Exception:
+                        try:
+                            value = float(value)
+                        except Exception:
+                            continue
+                new_dict[key] = value
+        return new_dict
+
     def do_create(self, arg):
         """Create command for create a new instance
         create <class name>
         """
         args = arg.split()
+        print(args)
         if len(args) == 0:
             print("** class name missing **")
         elif args[0] in self.class_exist.keys():
+            new_dict = self._create_dict_instance(args[1:])
+            print(new_dict)
             obj = self.class_exist[args[0]]()
+            for key, value in new_dict.items():
+                setattr(obj, key, value)
             obj.save()
             print(obj.id)
         else:
