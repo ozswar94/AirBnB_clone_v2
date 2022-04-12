@@ -51,9 +51,8 @@ class FileStorage:
                     self.new(eval(name)(**val_obj))
         except OSError:
             return
-    
+
     def delete(self, obj=None):
-        if obj == None:
+        if obj is None:
             return
         del self.__objects["{}.{}".format(type(obj).__name__, obj.id)]
-        
