@@ -1,2 +1,5 @@
 # rep python cache
 __pycache__/*
+
+# main file
+main*.py
