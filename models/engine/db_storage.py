@@ -42,7 +42,7 @@ class DBStorage:
                 cls = eval(cls)
             obj = self.__session.query(cls)
         else:
-            list_cls = [State, City]
+            list_cls = [State, City, User]
             for item in list_cls:
                 obj.extend(self.__session.query(item).all())
         for elem in obj:
