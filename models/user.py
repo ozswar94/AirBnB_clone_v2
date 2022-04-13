@@ -11,10 +11,12 @@ class User(BaseModel):
             first_name: string for first name
             last_name: string for last name
     """
-    email = ""
-    password = ""
-    first_name = ""
-    last_name = ""
-
+    __tablename__ = "users"
+    email = Column(String(128), nullable=False)
+    password = Column(String(128), nullable=False)
+    first_name = Column(String(128))
+    last_name = Column(String(128))
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+    """
