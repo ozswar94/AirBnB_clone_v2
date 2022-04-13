@@ -85,12 +85,10 @@ class HBNBCommand(cmd.Cmd):
         create <class name>
         """
         args = arg.split()
-        print(args)
         if len(args) == 0:
             print("** class name missing **")
         elif args[0] in self.class_exist.keys():
             new_dict = self._create_dict_instance(args[1:])
-            print(new_dict)
             obj = self.class_exist[args[0]]()
             for key, value in new_dict.items():
                 setattr(obj, key, value)
@@ -136,10 +134,11 @@ class HBNBCommand(cmd.Cmd):
             return False
         else:
             obj_instance = []
+            objects = storage.all()
             for key, value in storage.all().items():
                 class_name = key.split('.')
                 if class_name[0] == args[0]:
-                    obj_instance.append(str(storage.all()[key]))
+                    obj_instance.append(str(objects[key]))
             print(obj_instance)
 
     def do_destroy(self, arg):

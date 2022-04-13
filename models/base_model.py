@@ -7,8 +7,10 @@ import sqlalchemy
 from uuid import uuid4
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
+
 
 class BaseModel:
     """ The BaseModel class """
