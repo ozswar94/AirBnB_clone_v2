@@ -20,5 +20,3 @@ class DBStorage:
 
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
-
-
