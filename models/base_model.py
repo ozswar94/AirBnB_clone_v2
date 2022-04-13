@@ -31,6 +31,9 @@ class BaseModel:
                 else:
                     if k != "__class__":
                         setattr(self, k, v)
+        else:
+            self.id = str(uuid4())
+            self.created_at = self.updated_at = datetime.now()
 
     def __str__(self):
         """ return string representation of object BaseModel"""
@@ -48,12 +51,12 @@ class BaseModel:
 
     def to_dict(self):
         """ return a object Base model in dict """
-        dict = self.__dict__.copy()
-        dict["created_at"] = self.created_at.isoformat()
-        dict["updated_at"] = self.updated_at.isoformat()
-        dict["__class__"] = self.__class__.__name__
-        dict.pop("_sa_instance_state", None)
-        return dict
+        my_dict = self.__dict__.copy()
+        my_dict["created_at"] = self.created_at.isoformat()
+        my_dict["updated_at"] = self.updated_at.isoformat()
+        my_dict["__class__"] = self.__class__.__name__
+        my_dict.pop("_sa_instance_state", None)
+        return my_dict
 
     def delete(self):
         """ delete objet from json file"""

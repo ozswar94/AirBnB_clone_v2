@@ -92,8 +92,8 @@ class HBNBCommand(cmd.Cmd):
             obj = self.class_exist[args[0]]()
             for key, value in new_dict.items():
                 setattr(obj, key, value)
-            obj.save()
             print(obj.id)
+            obj.save()
         else:
             print("** class doesn't exist **")
 

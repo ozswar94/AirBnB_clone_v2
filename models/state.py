@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 """ module for class base and derived class """
+import os
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
+from models.city import City
+from sqlalchemy import ForeignKey
 
 
 class State(BaseModel, Base):
@@ -11,11 +14,12 @@ class State(BaseModel, Base):
             name: string
     """
     __tablename__ = "states"
-    name = Column(String(128), nullable=False)
-    city = relationship("City", backref="state", cascade="delete")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    name = Column(String(128), nullable=False)
+    cities = relationship("City", cascade='all, delete', backref="state")
 
     @property
     def cities(self):

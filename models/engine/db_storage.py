@@ -7,8 +7,10 @@ from models.state import State
 from models.review import Review
 from models.place import Place
 from models.city import City
+from models.amenity import Amenity
 from sqlalchemy.orm import Session, sessionmaker, scoped_session
 from sqlalchemy import (create_engine)
+from sqlalchemy.engine.url import URL
 
 
 class DBStorage:
@@ -17,12 +19,16 @@ class DBStorage:
     __session = None
 
     def __init__(self):
-        self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@{}}/{}'.format(
-                getenv("HBNB_MYSQL_USER"),
-                getenv("HBNB_MYSQL_PWD"),
-                getenv("HBNB_MYSQL_HOST"),
-                gentenv("HBNB_MYSQL_DB"), pool_pre_ping=True))
+
+        mySQL_u = getenv("HBNB_MYSQL_USER")
+        mySQL_p = getenv("HBNB_MYSQL_PWD")
+        dbHost = getenv("HBNB_MYSQL_HOST")
+        dbName = getenv("HBNB_MYSQL_DB")
+
+        url = {'drivername': 'mysql+mysqldb', 'host': dbHost,
+               'username': mySQL_u, 'password': mySQL_p, 'database': dbName}
+
+        self.__engine = create_engine(URL(**url), pool_pre_ping=True)
 
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
@@ -30,19 +36,18 @@ class DBStorage:
     def all(self, cls=None):
         """ return all table or all table by cls"""
         dic = {}
+        obj = []
         if cls:
             if type(cls) is str:
                 cls = eval(cls)
-            query = self.__session.query(cls)
-            for elem in query:
-                key = "{}.{}".format(elem.__name__, elem.id)
-                dic[key] = elem
+            obj = self.__session.query(cls)
         else:
-            for classe in [User, State, City, Amenity, Place, Review]:
-                query = self.__session.query(classe)
-                for elem in query:
-                    key - "{}.{}".format(type(elem).__name__, elem.id)
-                    dic[key] = elem
+            list_cls = [State, City]
+            for item in list_cls:
+                obj.extend(self.__session.query(item).all())
+        for elem in obj:
+            key = "{}.{}".format(type(elem).__name__, elem.id)
+            dic[key] = elem
         return dic
 
     def new(self, obj):
