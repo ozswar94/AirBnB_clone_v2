@@ -6,7 +6,7 @@ from os.path import isdir
 
 
 def do_pack():
-    """ """
+    """ archive file """
     try:
         date = datetime.now().strftime("%Y%m%d%H%M%S")
         if isdir("versions") is False:
