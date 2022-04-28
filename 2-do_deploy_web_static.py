@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-""" definition of do_depliy function"""
-from frabric.api import put, run, env
+""" definition of do_depliy function """
+from fabric.api import put, run, env
 from os.path import exists
 env.hosts = ['34.139.53.21', '35.196.110.215']
 
@@ -11,7 +11,7 @@ def do_deploy(archive_path):
         return False
     try:
         filename = archive_path.split('/')[-1]
-        fname_noext = filename.split('.').[0]
+        fname_noext = filename.split('.')[0]
         path = "/data/web_static/releases/"
         put(archive_path, '/tmp/')
         run('mkdir -p {}{}/'.format(path, fname_noext))
