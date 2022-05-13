@@ -56,3 +56,7 @@ class FileStorage:
         """ Delete obj in __objects"""
         if obj:
             del self.__objects["{}.{}".format(type(obj).__name__, obj.id)]
+
+    def close(self):
+	     """ close file .json """
+	     self.reload()
