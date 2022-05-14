@@ -14,14 +14,11 @@ class State(BaseModel, Base):
             name: string
     """
     __tablename__ = "states"
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     name = Column(String(128), nullable=False)
-    cities = relationship("City", cascade='all, delete', backref="state")
 
-    if os.getenv("HBNB_TYPE_STORAGE") != 'db':
+    if os.getenv("HBNB_TYPE_STORAGE") == 'db':
+        cities = relationship("City", cascade='all, delete', backref="state")
+    else:
         @property
         def cities(self):
             list_city = []
