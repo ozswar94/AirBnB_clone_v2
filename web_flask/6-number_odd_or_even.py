@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" print if is odd or even """
 from flask import Flask, render_template
 app = Flask(__name__)
 
