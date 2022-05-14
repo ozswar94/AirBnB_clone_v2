@@ -1,14 +1,12 @@
 #!/usr/bin/python3
 """ hello world flask"""
 from flask import Flask
-
-
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 
 
-@app.route('/')
+@app.route('/', strict_slashes=False)
 def hello_world():
+    """ print hello world on web page """
     return 'Hello HBNB!'
 
 
