@@ -22,9 +22,7 @@ def print_c(text):
 
 @app.route('/python')
 @app.route('/python/<text>')
-def print_python(text=None):
-    if text is None:
-        text = 'is cool'
+def print_python(text='is_cool'):
     text = text.replace('_', ' ')
     return 'Python ' + text
 

@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 from flask import Flask, render_template
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 
 
 @app.route('/')
@@ -22,9 +21,7 @@ def print_c(text):
 
 @app.route('/python')
 @app.route('/python/<text>')
-def print_python(text=None):
-    if text is None:
-        text = 'is cool'
+def print_python(text='is cool'):
     text = text.replace('_', ' ')
     return 'Python ' + text
 
@@ -40,4 +37,5 @@ def print_number_template(n):
 
 
 if __name__ == '__main__':
+    app.url_map.strict_slashes = False
     app.run(host='0.0.0.0', port=5000)
