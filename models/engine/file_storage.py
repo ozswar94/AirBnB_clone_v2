@@ -58,5 +58,5 @@ class FileStorage:
             del self.__objects["{}.{}".format(type(obj).__name__, obj.id)]
 
     def close(self):
-	     """ close file .json """
-	     self.reload()
+        """ close file .json """
+        self.reload()

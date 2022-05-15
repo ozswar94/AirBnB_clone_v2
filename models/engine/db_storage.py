@@ -72,5 +72,5 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
-	     """ close session MySQL """
-	     self.__session.close()
+        """ close session MySQL """
+        self.__session.close()
